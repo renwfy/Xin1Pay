@@ -75,7 +75,7 @@ $(document).ready(function () {
             nick = $('#user_nick').val(),
             data = tpl_data[tpl_id];
 
-        let text = baseURL + '/qr.html?alipay=' + ali + '&qqpay=' + qq + '&vxpay=' + vx + '&nick=' + nick;
+        let text = baseURL + '/pay.html?ali=' + ali + '&qq=' + qq + '&vx=' + vx + '&nick=' + nick;
         console.log(text);
         let qrbox = $("#qrbox").qrcode({
             width: data['qrsize'], //宽度
