@@ -42,21 +42,35 @@
         window.location.href = setting.aliUrl;
     } else if (navigator.userAgent.match(/MicroMessenger\//i)) {
         $('.pay_tips').html("长按识别向" + setting.nick + "付款");
+        $('.pay_tips').css("color", "#ffffff");
         $('.pay_way').html("微信支付");
         $('.head').attr("src", './img/wx.png');
         $('.ui-box').css("background-color", "#54bc6e");
-        $("#page-url").qrcode(setting.wechatUrl);
+        $("#page-url").qrcode({
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            text: setting.wechatUrl,
+        });
         document.getElementById("page-url").src = convertCanvasToImage();
     } else if (navigator.userAgent.match(/QQ\//i)) {
         $('.pay_tips').html("长按识别向" + setting.nick + "付款");
+        $('.pay_tips').css("color", "#ffffff");
         $('.pay_way').html("QQ钱包");
         $('.head').attr("src", './img/QQ.png');
         $('.ui-box').css("background-color", "#049fda");
-        $("#page-url").qrcode(setting.qqUrl);
+        $("#page-url").qrcode({
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            text: setting.qqUrl,
+        });
         document.getElementById("page-url").src = convertCanvasToImage();
     } else {
         $('.pay_tips').html("扫一扫向" + setting.nick + "付款");
-        $("#page-url").qrcode(window.location.href);
+        $("#page-url").qrcode({
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            text: window.location.href,
+        });
         document.getElementById("page-url").src = convertCanvasToImage();
     }
 

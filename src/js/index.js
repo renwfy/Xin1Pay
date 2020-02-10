@@ -81,6 +81,8 @@ $(document).ready(function () {
             width: data['qrsize'], //宽度
             height: data['qrsize'], //高度
             text: text, //任意内容
+            colorDark: "#000000",
+            colorLight: "#ffffff",
         });
         let canvas = qrbox.find('canvas').get(0);
         let imgdata = canvas.toDataURL('image/jpg');

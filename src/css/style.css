@@ -10,7 +10,7 @@ body {
     font-family: -apple-system-font, YouYuan, Microsoft YaHei, Helvetica Neue, Helvetica, sans-serif
 }
 
-dev,p{
+dev, p {
     margin: 0;
     padding: 0;
 }
@@ -31,7 +31,7 @@ dev,p{
     justify-content: center;
 }
 
-#ui-head img{
+#ui-head img {
     width: 50px;
 }
 
@@ -42,24 +42,20 @@ dev,p{
     flex: 1;
 }
 
-.pay_tips{
+.pay_tips {
     margin-top: 20px;
     font-size: 17px;
     color: #333;
 }
 
-.qrbox{
-    width: 200px;
-    height: 200px;
-    margin-top: 40px;
+#page-url {
+    width: 180px;
+    height: 180px;
+    margin-top: 30px;
+    background: white;
+    padding: 8px;
 }
 
-#page-url{
-    width: 200px;
-    height: 200px;
-    margin-top: 40px;
-}
-
-.simg{
+.simg {
     width: 30px;
 }
