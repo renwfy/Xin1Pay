@@ -1,5 +1,5 @@
 # Xin1Pay
-X合一收款码在线生成。
+X合一收款码在线生成，纯前端，无需后端支持。
 项目源自：https://github.com/insoxin/qrpay
 
 ## 常见问题
