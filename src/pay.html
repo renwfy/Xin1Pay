@@ -7,8 +7,9 @@
     <title>聚合收款</title>
     <script type="text/javascript" src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://lib.baomitu.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="https://lib.baomitu.com/layer/3.1.1/layer.js"></script>
     <link href="./css/style.css" rel="stylesheet">
-    <link rel="shortcut icon" href="./img/X.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="./img/X.png" type="image/x-icon"/>
 </head>
 <body id="color">
 <div class="container" id="code-all">
@@ -27,10 +28,30 @@
     let setting = {
         nick: GetQueryString('nick'),
         qqUrl: GetQueryString('qq'),
-        wechatUrl: GetQueryString('vx'),
+        wechatUrl: GetQueryString('wx'),
         aliUrl: GetQueryString('ali'),
+        id: GetQueryString('id'),
     }
-    console.log(setting)
+    if (setting.id) {
+        $.ajax({
+            url: 'http://follow.fiz.ink/api/public/xpay/checkCode/' + setting.id,
+            type: 'GET',
+            cache: false,
+            success: function (res) {
+                console.log(res);
+                if (res.error != 0) {
+                    return layer.msg(res.msg);
+                }
+                setting.nick = res.data.nick;
+                setting.qqUrl = res.data.qq;
+                setting.wechatUrl = res.data.wx;
+                setting.aliUrl = res.data.ali;
+                checkPayWay();
+            }
+        });
+    } else {
+        checkPayWay();
+    }
 
     function convertCanvasToImage() {
         let canvas = document.getElementsByTagName('canvas')[0];
@@ -39,42 +60,45 @@
         return data;
     }
 
-    if (navigator.userAgent.match(/Alipay/i)) {
-        window.location.href = setting.aliUrl;
-    } else if (navigator.userAgent.match(/MicroMessenger\//i)) {
-        $('.pay_tips').html("长按识别向" + setting.nick + "付款");
-        $('.pay_tips').css("color", "#ffffff");
-        $('.pay_way').html("微信支付");
-        $('.head').attr("src", './img/wx.png');
-        $('.ui-box').css("background-color", "#54bc6e");
-        $("#page-url").qrcode({
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            text: setting.wechatUrl,
-        });
-        document.getElementById("page-url").src = convertCanvasToImage();
-    } else if (navigator.userAgent.match(/QQ\//i)) {
-        $('.pay_tips').html("长按识别向" + setting.nick + "付款");
-        $('.pay_tips').css("color", "#ffffff");
-        $('.pay_way').html("QQ钱包");
-        $('.head').attr("src", './img/QQ.png');
-        $('.ui-box').css("background-color", "#049fda");
-        $("#page-url").qrcode({
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            text: setting.qqUrl,
-        });
-        document.getElementById("page-url").src = convertCanvasToImage();
-    } else {
-        $('.pay_tips').html("扫一扫向" + setting.nick + "付款");
-        $("#page-url").qrcode({
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            text: window.location.href,
-        });
-        document.getElementById("page-url").src = convertCanvasToImage();
-    }
 
+    //检查支付方式
+    function checkPayWay() {
+        if (navigator.userAgent.match(/Alipay/i)) {
+            window.location.href = setting.aliUrl;
+        } else if (navigator.userAgent.match(/MicroMessenger\//i)) {
+            $('.pay_tips').html("长按识别向" + setting.nick + "付款");
+            $('.pay_tips').css("color", "#ffffff");
+            $('.pay_way').html("微信支付");
+            $('.head').attr("src", './img/wx.png');
+            $('.ui-box').css("background-color", "#54bc6e");
+            $("#page-url").qrcode({
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                text: setting.wechatUrl,
+            });
+            document.getElementById("page-url").src = convertCanvasToImage();
+        } else if (navigator.userAgent.match(/QQ\//i)) {
+            $('.pay_tips').html("长按识别向" + setting.nick + "付款");
+            $('.pay_tips').css("color", "#ffffff");
+            $('.pay_way').html("QQ钱包");
+            $('.head').attr("src", './img/QQ.png');
+            $('.ui-box').css("background-color", "#049fda");
+            $("#page-url").qrcode({
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                text: setting.qqUrl,
+            });
+            document.getElementById("page-url").src = convertCanvasToImage();
+        } else {
+            $('.pay_tips').html("扫一扫向" + setting.nick + "付款");
+            $("#page-url").qrcode({
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                text: window.location.href,
+            });
+            document.getElementById("page-url").src = convertCanvasToImage();
+        }
+    }
 </script>
 </body>
 </html>

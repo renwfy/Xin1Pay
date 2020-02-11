@@ -28,7 +28,6 @@ function getObjectURL(file) {
 }
 
 $(document).ready(function () {
-    let baseURL = "http://xpay.fiz.ink";
     $("#alipay,#wechat,#qaq,#jd,#bd").change(function ($this) {
         handleFiles(this);
     });
@@ -70,25 +69,46 @@ $(document).ready(function () {
 
         layer.msg('加载中,请稍候！', {icon: 16, shade: 0.01, time: 2000000});
         let ali = urlEncode($('#alipay_url').val()),
-            vx = urlEncode($('#wechat_url').val()),
+            wx = urlEncode($('#wechat_url').val()),
             qq = urlEncode($('#qq_url').val()),
             nick = $('#user_nick').val(),
             data = tpl_data[tpl_id];
 
-        let text = baseURL + '/pay.html?ali=' + ali + '&qq=' + qq + '&vx=' + vx + '&nick=' + nick;
-        console.log(text);
-        let qrbox = $("#qrbox").qrcode({
-            width: data['qrsize'], //宽度
-            height: data['qrsize'], //高度
-            text: text, //任意内容
-            colorDark: "#000000",
-            colorLight: "#ffffff",
+        if(!nick){
+            layer.msg("请输入昵称！", {icon: 7});
+            return false;
+        }
+        if(!ali && !wx && !qq){
+            layer.msg("至少选择一种收款方式！", {icon: 7});
+            return false;
+        }
+
+        //前端直接生成二维码的方案
+        /*
+                let text = 'http://xpay.fiz.ink/pay.html?ali=' + ali + '&qq=' + qq + '&wx=' + wx + '&nick=' + nick;
+                console.log(text);
+                let qrbox = $("#qrbox").qrcode({
+                    width: data['qrsize'], //宽度
+                    height: data['qrsize'], //高度
+                    text: text, //任意内容
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                });
+                let canvas = qrbox.find('canvas').get(0);
+                let imgdata = canvas.toDataURL('image/jpg');
+                qrbox.find('canvas').remove();
+                $('#temp').attr('src', imgdata);
+                setTimeout(resetCanvas(data, tpl_id), 500);
+                 */
+
+        //后端生成二维码的方案，可以精简二维码
+        //http://follow.fiz.ink
+        let qrImg = document.getElementById("temp");
+        qrImg.crossOrigin = 'Anonymous';
+        qrImg.src = 'http://follow.fiz.ink/api/public/xpay/getQrCode?nick=' + nick + '&ali=' + ali + '&wx=' + wx + '&qq=' + qq;
+        $(qrImg).load(function (e) {
+            setTimeout(resetCanvas(data, tpl_id), 500);
         });
-        let canvas = qrbox.find('canvas').get(0);
-        let imgdata = canvas.toDataURL('image/jpg');
-        qrbox.find('canvas').remove();
-        $('#temp').attr('src', imgdata);
-        setTimeout(resetCanvas(data, tpl_id), 500);
     });
 });
 
