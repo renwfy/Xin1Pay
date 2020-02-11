@@ -71,6 +71,9 @@
             $('.pay_way').html("微信支付");
             $('.head').attr("src", './img/wx.png');
             $('.ui-box').css("background-color", "#54bc6e");
+            if (!setting.wechatUrl) {
+                return layer.msg("未设置微信收款");
+            }
             $("#page-url").qrcode({
                 colorDark: "#000000",
                 colorLight: "#ffffff",
@@ -83,6 +86,9 @@
             $('.pay_way').html("QQ钱包");
             $('.head').attr("src", './img/QQ.png');
             $('.ui-box').css("background-color", "#049fda");
+            if (!setting.qqUrl) {
+                return layer.msg("未设置QQ收款");
+            }
             $("#page-url").qrcode({
                 colorDark: "#000000",
                 colorLight: "#ffffff",
@@ -91,6 +97,10 @@
             document.getElementById("page-url").src = convertCanvasToImage();
         } else {
             $('.pay_tips').html("扫一扫向" + setting.nick + "付款");
+            $('.pay_tips').css("color", "#333333");
+            $('.pay_way').html("支付平台");
+            $('.head').attr("src", './img/x.png');
+            $('.ui-box').css("background-color", "#ffffff");
             $("#page-url").qrcode({
                 colorDark: "#000000",
                 colorLight: "#ffffff",
