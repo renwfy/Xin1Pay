@@ -15,6 +15,10 @@ dev, p {
     padding: 0;
 }
 
+#containerBody{
+    display: none;
+}
+
 .container {
     height: 100%;
     display: flex;

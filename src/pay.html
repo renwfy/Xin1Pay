@@ -11,7 +11,7 @@
     <link href="./css/style.css" rel="stylesheet">
     <link rel="shortcut icon" href="./img/x.png" type="image/x-icon"/>
 </head>
-<body id="color">
+<body id="containerBody">
 <div class="container" id="code-all">
     <div id="ui-head">
         <img class="head" src="./img/x.png">
@@ -80,6 +80,7 @@
                 text: setting.wechatUrl,
             });
             document.getElementById("page-url").src = convertCanvasToImage();
+            $('#containerBody').show();
         } else if (navigator.userAgent.match(/QQ\//i)) {
             $('.pay_tips').html("长按识别向" + setting.nick + "付款");
             $('.pay_tips').css("color", "#ffffff");
@@ -95,6 +96,7 @@
                 text: setting.qqUrl,
             });
             document.getElementById("page-url").src = convertCanvasToImage();
+            $('#containerBody').show();
         } else {
             $('.pay_tips').html("扫一扫向" + setting.nick + "付款");
             $('.pay_tips').css("color", "#333333");
@@ -107,6 +109,7 @@
                 text: window.location.href,
             });
             document.getElementById("page-url").src = convertCanvasToImage();
+            $('#containerBody').show();
         }
     }
 </script>
