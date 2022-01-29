@@ -60,7 +60,6 @@
         return data;
     }
 
-
     //检查支付方式
     function checkPayWay() {
         if (navigator.userAgent.match(/Alipay/i)) {
@@ -74,12 +73,14 @@
             if (!setting.wechatUrl) {
                 return layer.msg("未设置微信收款");
             }
+            /*这里直接显示二维码了
             $("#page-url").qrcode({
                 colorDark: "#000000",
                 colorLight: "#ffffff",
                 text: setting.wechatUrl,
             });
-            document.getElementById("page-url").src = convertCanvasToImage();
+            document.getElementById("page-url").src = convertCanvasToImage();*/
+            document.getElementById("page-url").src = setting.wechatUrl;
             $('#containerBody').show();
         } else if (navigator.userAgent.match(/QQ\//i)) {
             $('.pay_tips').html("长按识别向" + setting.nick + "付款");
